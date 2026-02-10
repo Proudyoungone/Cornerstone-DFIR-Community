@@ -1,1 +1,1 @@
-# cornerstone-dfir-community
+# Cornerstone-DFIR-Community
