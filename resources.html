@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Resources — Cornerstone DFIR</title>
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+
+<body>
+  <!-- ================= HEADER ================= -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <h1>Cornerstone DFIR</h1>
+          <p>Laying the foundation for the next generation of digital investigators</p>
+        </div>
+      </a>
+
+      <nav aria-label="Primary navigation">
+        <a data-nav href="index.html">Home</a>
+        <a data-nav href="opportunities.html">Opportunities</a>
+        <a data-nav href="conferences.html">Conferences</a>
+        <a data-nav href="voices.html">The Investigator’s Path</a>
+        <a data-nav href="resources.html">Resources</a>
+        <a data-nav href="submit.html#digest">Monthly Digest</a>
+        <a data-nav href="board.html">Community Board</a>
+
+        <button class="toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+          <span class="icon" id="themeIcon" aria-hidden="true"></span>
+          <span id="themeLabel">Theme</span>
+        </button>
+        
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main class="wrap">
+
+    <!-- HERO -->
+    <section class="card page-hero">
+      <div>
+        <div class="kicker">
+          <span class="dot"></span>
+          <span>High-signal • Curated • Early-career friendly</span>
+        </div>
+
+        <h2>Resources</h2>
+
+        <p>
+          Communities, advocacy groups, DFIR research hubs, podcasts, webinars,
+          and academic programs — organized so you can grow faster without
+          searching everywhere.
+        </p>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="submit_item.html">Submit a Resource</a>
+        <a class="btn ghost" href="opportunities.html">Browse Opportunities</a>
+      </div>
+    </section>
+
+    <!-- RESOURCE BOARD -->
+    <section class="card" style="padding:18px; margin-top:18px;">
+
+      <div class="section-head">
+        <div>
+          <h3>Browse Resources</h3>
+          <p>Search by name, category, or topic.</p>
+        </div>
+      </div>
+
+      <!-- SEARCH + SORT -->
+      <div class="toolbar" style="margin:10px 0 12px;">
+        <input
+          id="resSearch"
+          class="grow"
+          type="search"
+          placeholder="Search (women in tech, DFIR, schools, podcasts…)">
+        
+        <select id="resSort" aria-label="Sort resources">
+          <option value="name_asc">Sort: Name (A–Z)</option>
+          <option value="name_desc">Sort: Name (Z–A)</option>
+          <option value="category_asc">Sort: Category</option>
+        </select>
+      </div>
+
+      <!-- GRID -->
+      <div id="resourceGrid" aria-live="polite">
+
+
+        <!-- Helpful loading state -->
+        <div class="item">
+          <h4>Loading resources...</h4>
+          <p class="meta">
+            If this message stays visible, check that
+            <strong>/data/resources.json</strong> exists and the server is running.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div>© <span id="year"></span> Cornerstone DFIR</div>
+
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a href="about.html">About</a>
+        <a href="submit.html#digest">Monthly Digest</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="./assets/js/app.js"></script>
+
+</body>
+</html>

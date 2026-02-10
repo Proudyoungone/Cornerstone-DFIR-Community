@@ -1,0 +1,142 @@
+[
+  {
+    "title": "Magnet Forensics TAP Scholarship",
+    "type": "Scholarship",
+    "deadline": "2026-03-15",
+    "focus": "Digital Forensics Training",
+    "summary": "Scholarship providing access to Magnet’s Training Annual Pass (TAP), enabling year-long forensic training courses and certification prep.",
+    "filters": ["scholarship", "entry"],
+    "links": [
+      {
+        "label": "View Scholarship",
+        "url": "https://www.magnetforensics.com"
+      }
+    ]
+  },
+  {
+    "title": "WiCyS Mentorship Program",
+    "type": "Mentorship",
+    "deadline": "2026-02-28",
+    "focus": "Women in Cybersecurity",
+    "summary": "Structured mentorship pairing early-career professionals with experienced cybersecurity leaders for career development and networking.",
+    "filters": ["mentorship", "entry"],
+    "links": [
+      {
+        "label": "Apply",
+        "url": "https://www.wicys.org"
+      }
+    ]
+  },
+  {
+    "title": "Cyversity Cybersecurity Mentorship",
+    "type": "Mentorship",
+    "deadline": "Rolling",
+    "focus": "Underrepresented Groups in Cyber",
+    "summary": "Career coaching, resume support, and professional mentorship for aspiring cybersecurity practitioners.",
+    "filters": ["mentorship", "entry"],
+    "links": [
+      {
+        "label": "Learn More",
+        "url": "https://cyversity.org"
+      }
+    ]
+  },
+  {
+    "title": "CISA Cybersecurity Internship Program",
+    "type": "Internship",
+    "deadline": "2026-04-01",
+    "focus": "Federal Cybersecurity",
+    "summary": "Hands-on experience supporting national cyber defense initiatives while working alongside federal security professionals.",
+    "filters": ["internship", "entry"],
+    "links": [
+      {
+        "label": "Apply",
+        "url": "https://www.cisa.gov/careers"
+      }
+    ]
+  },
+  {
+    "title": "Vulnerability Researcher Internship",
+    "type": "Internship",
+    "deadline": "2026-03-30",
+    "focus": "Security Research",
+    "summary": "Opportunity to work with a research team identifying software vulnerabilities, performing exploit analysis, and improving defensive tooling.",
+    "filters": ["internship"],
+    "links": [
+      {
+        "label": "Search Open Roles",
+        "url": "https://jobs.lever.co"
+      }
+    ]
+  },
+  {
+    "title": "SANS DFIR NetWars Tournament",
+    "type": "Competition",
+    "deadline": "Rolling",
+    "focus": "Hands-On DFIR Skills",
+    "summary": "Interactive forensic challenges designed to sharpen investigative skills through real-world scenarios.",
+    "filters": ["competition", "entry"],
+    "links": [
+      {
+        "label": "Explore NetWars",
+        "url": "https://www.sans.org"
+      }
+    ]
+  },
+  {
+    "title": "Student Volunteer – DEF CON",
+    "type": "Volunteer",
+    "deadline": "2026-05-01",
+    "focus": "Conference Experience",
+    "summary": "Volunteer at one of the world’s largest security conferences while gaining exposure and networking opportunities.",
+    "filters": ["volunteer", "entry"],
+    "links": [
+      {
+        "label": "Volunteer Info",
+        "url": "https://defcon.org"
+      }
+    ]
+  },
+  {
+    "title": "Champlain College Digital Forensics Scholarship",
+    "type": "Scholarship",
+    "deadline": "2026-02-15",
+    "focus": "Academic DFIR Programs",
+    "summary": "Financial support for students pursuing undergraduate digital forensics degrees.",
+    "filters": ["scholarship", "entry"],
+    "links": [
+      {
+        "label": "Scholarship Details",
+        "url": "https://www.champlain.edu"
+      }
+    ]
+  },
+  {
+    "title": "Open Source DFIR Contributor Path",
+    "type": "Fellowship",
+    "deadline": "Rolling",
+    "focus": "Open-Source Development",
+    "summary": "Build experience contributing to forensic tools such as ALEAPP, iLEAPP, and Volatility while collaborating with the DFIR community.",
+    "filters": ["fellowship", "entry"],
+    "links": [
+      {
+        "label": "Explore Projects",
+        "url": "https://github.com"
+      }
+    ]
+  },
+  {
+    "title": "Forensic Focus Writing Program",
+    "type": "Writing",
+    "deadline": "Rolling",
+    "focus": "Thought Leadership",
+    "summary": "Publish research, case studies, or technical walkthroughs to build your professional voice within the DFIR community.",
+    "filters": ["writing"],
+    "links": [
+      {
+        "label": "Submit Article",
+        "url": "https://www.forensicfocus.com"
+      }
+    ]
+  }
+]

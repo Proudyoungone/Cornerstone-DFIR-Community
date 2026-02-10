@@ -1,0 +1,80 @@
+[
+  {
+    "name": "SANS DFIR Summit & Training 2026",
+    "format": "Hybrid",
+    "dateRange": "Oct 15–22, 2026",
+    "location": "Arlington, VA & Virtual (ET)",
+    "notes": "Strong DFIR content + optional training courses. Great for leveling up and meeting working practitioners.",
+    "tags": ["dfir", "training", "summit", "hybrid"],
+    "links": [
+      {
+        "label": "Event page",
+        "url": "https://www.sans.org/cyber-security-training-events/digital-forensics-summit-2026"
+      }
+    ]
+  },
+  {
+    "name": "Techno Security & Digital Forensics Conference (East) 2026",
+    "format": "In-person",
+    "dateRange": "Jun 2–4, 2026",
+    "location": "Myrtle Beach, SC",
+    "notes": "Large community conference with a blend of DFIR + cyber + eDiscovery. Good for networking and broad exposure.",
+    "tags": ["dfir", "conference", "networking"],
+    "links": [
+      {
+        "label": "Event page",
+        "url": "https://www.technosecurity.us/east"
+      }
+    ]
+  },
+  {
+    "name": "Techno Security & Digital Forensics Conference (West) 2026",
+    "format": "In-person",
+    "dateRange": "Oct 20–22, 2026",
+    "location": "San Diego, CA",
+    "notes": "West coast edition. Similar mix of DFIR + cyber + eDiscovery, great for meeting vendors and practitioners.",
+    "tags": ["dfir", "conference", "west-coast"],
+    "links": [
+      {
+        "label": "Main Techno site",
+        "url": "https://www.technosecurity.us/"
+      }
+    ]
+  },
+  {
+    "name": "IACIS 2026 Orlando Training Conference",
+    "format": "In-person",
+    "dateRange": "Apr 27 – May 8, 2026",
+    "location": "Orlando, FL",
+    "notes": "Training-focused event (BCFE). If you want structure + fundamentals, this is a strong route.",
+    "tags": ["training", "bcfe", "iacis"],
+    "links": [
+      {
+        "label": "Event page",
+        "url": "https://www.iacis.com/events/in-person/2026-orlando-training-conference/"
+      },
+      {
+        "label": "IACIS events list",
+        "url": "https://www.iacis.com/events/"
+      }
+    ]
+  },
+  {
+    "name": "DFRWS USA 2026",
+    "format": "Hybrid",
+    "dateRange": "Jul 27–31, 2026",
+    "location": "Arlington, VA + Virtual",
+    "notes": "Research-focused DFIR conference: papers, workshops, posters/demos. Great if you like academic + validation-heavy work.",
+    "tags": ["research", "dfrws", "hybrid"],
+    "links": [
+      {
+        "label": "Conference hub",
+        "url": "https://dfrws.org/"
+      },
+      {
+        "label": "Event listing",
+        "url": "https://www.forensicfocus.com/event/dfrws-usa-2026/"
+      }
+    ]
+  }
+]

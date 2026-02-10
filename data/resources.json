@@ -1,0 +1,210 @@
+[
+  {
+    "name": "National Computer Forensics Institute (NCFI)",
+    "category": "Professional Resources",
+    "type": "Government Training",
+    "notes": "Federally funded digital forensics training for law enforcement and prosecutors.",
+    "tags": ["training", "academy", "federal", "forensics"],
+    "links": [
+      {
+        "label": "Visit NCFI",
+        "url": "https://www.ncfi.usss.gov/"
+      }
+    ]
+  },
+  {
+    "name": "NW3C",
+    "category": "Professional Resources",
+    "type": "Government Training",
+    "notes": "Provides cybercrime and digital forensics training nationwide.",
+    "tags": ["training", "academy", "cybercrime"],
+    "links": [
+      {
+        "label": "Visit NW3C",
+        "url": "https://www.nw3c.org/"
+      }
+    ]
+  },
+  {
+    "name": "SANS DFIR",
+    "category": "Professional Resources",
+    "type": "Certification & Training",
+    "notes": "Globally respected DFIR training paired with GIAC certifications.",
+    "tags": ["training", "certification", "advanced"],
+    "links": [
+      {
+        "label": "SANS DFIR",
+        "url": "https://www.sans.org/"
+      }
+    ]
+  },
+  {
+    "name": "Hexordia",
+    "category": "Professional Resources",
+    "type": "Private Academy",
+    "notes": "Hands-on DFIR and incident response courses.",
+    "tags": ["academy", "training"],
+    "links": [
+      {
+        "label": "Visit Hexordia",
+        "url": "https://hexordia.com/"
+      }
+    ]
+  },
+  {
+    "name": "CyberDefenders",
+    "category": "Professional Resources",
+    "type": "Free Labs",
+    "notes": "Real-world DFIR challenges designed to simulate investigations.",
+    "tags": ["free", "labs", "training", "hands-on"],
+    "links": [
+      {
+        "label": "Start Labs",
+        "url": "https://cyberdefenders.org/"
+      }
+    ]
+  },
+  {
+    "name": "Blue Team Labs Online",
+    "category": "Professional Resources",
+    "type": "Free Labs",
+    "notes": "Detection engineering and forensic investigation labs.",
+    "tags": ["free", "labs", "blue team"],
+    "links": [
+      {
+        "label": "Visit BTLO",
+        "url": "https://blueteamlabs.online/"
+      }
+    ]
+  },
+  {
+    "name": "TryHackMe",
+    "category": "Professional Resources",
+    "type": "Cyber Range",
+    "notes": "Beginner-friendly cybersecurity training platform.",
+    "tags": ["beginner", "training", "labs"],
+    "links": [
+      {
+        "label": "TryHackMe",
+        "url": "https://tryhackme.com/"
+      }
+    ]
+  },
+  {
+    "name": "Magnet Forensics Training",
+    "category": "Professional Resources",
+    "type": "Vendor Training",
+    "notes": "Courses covering mobile, cloud, and digital investigations.",
+    "tags": ["training", "mobile", "vendor"],
+    "links": [
+      {
+        "label": "Magnet Training",
+        "url": "https://www.magnetforensics.com/training/"
+      }
+    ]
+  },
+  {
+    "name": "Autopsy",
+    "category": "Professional Resources",
+    "type": "Open-Source Tool",
+    "notes": "Widely used open-source digital forensics platform.",
+    "tags": ["tool", "open-source", "disk"],
+    "links": [
+      {
+        "label": "Autopsy",
+        "url": "https://www.autopsy.com/"
+      }
+    ]
+  },
+  {
+    "name": "Volatility",
+    "category": "Professional Resources",
+    "type": "Memory Forensics Tool",
+    "notes": "Industry-standard framework for memory analysis.",
+    "tags": ["tool", "memory", "advanced"],
+    "links": [
+      {
+        "label": "Volatility",
+        "url": "https://volatilityfoundation.org/"
+      }
+    ]
+  },
+  {
+    "name": "KAPE",
+    "category": "Professional Resources",
+    "type": "Artifact Collection Tool",
+    "notes": "Rapid artifact acquisition used in incident response.",
+    "tags": ["tool", "triage", "collection"],
+    "links": [
+      {
+        "label": "KAPE GitHub",
+        "url": "https://github.com/EricZimmerman/KapeFiles"
+      }
+    ]
+  },
+  {
+    "name": "ALEAPP / iLEAPP",
+    "category": "Professional Resources",
+    "type": "Mobile Forensics Tools",
+    "notes": "Parsers for Android and iOS forensic artifacts.",
+    "tags": ["tool", "mobile", "open-source"],
+    "links": [
+      {
+        "label": "LEAPP GitHub",
+        "url": "https://github.com/abrignoni"
+      }
+    ]
+  },
+  {
+    "name": "DFIR Report",
+    "category": "Professional Resources",
+    "type": "Threat Research",
+    "notes": "Deep investigative reports on real-world cyber incidents.",
+    "tags": ["research", "learning"],
+    "links": [
+      {
+        "label": "Read Reports",
+        "url": "https://thedfirreport.com/"
+      }
+    ]
+  },
+  {
+    "name": "Forensic Focus",
+    "category": "Professional Resources",
+    "type": "Community",
+    "notes": "Articles, webinars, and global DFIR discussions.",
+    "tags": ["community", "learning"],
+    "links": [
+      {
+        "label": "Visit Forensic Focus",
+        "url": "https://www.forensicfocus.com/"
+      }
+    ]
+  },
+  {
+    "name": "WiCyS",
+    "category": "Professional Resources",
+    "type": "Professional Community",
+    "notes": "Advancing women in cybersecurity through mentorship and scholarships.",
+    "tags": ["community", "mentorship"],
+    "links": [
+      {
+        "label": "WiCyS",
+        "url": "https://www.wicys.org/"
+      }
+    ]
+  },
+  {
+    "name": "Cyversity",
+    "category": "Professional Resources",
+    "type": "Nonprofit",
+    "notes": "Supports underrepresented groups entering cybersecurity.",
+    "tags": ["community", "scholarships"],
+    "links": [
+      {
+        "label": "Cyversity",
+        "url": "https://cyversity.org/"
+      }
+    ]
+  }
+]
