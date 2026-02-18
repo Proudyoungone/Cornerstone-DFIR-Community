@@ -44,27 +44,47 @@
       <div id="articleList" class="grid3" aria-live="polite"></div>
     </section>
 
-    <section class="voices-admin">
-  <h2>Publish a Voice</h2>
+  <section class="card" style="padding:18px;">
+  <div class="section-head">
+    <div>
+      <h3>Publish a Voice</h3>
+      <p>Create a new post for The Investigator’s Path.</p>
+    </div>
+  </div>
 
-  <label>Title</label>
-  <input id="voiceTitle" type="text" placeholder="Post title" />
+  <div class="voices-form">
+    <div class="field">
+      <label for="voiceTitle">Title</label>
+      <input id="voiceTitle" type="text" placeholder="Post title" />
+    </div>
 
-  <label>Author</label>
-  <input id="voiceAuthor" type="text" placeholder="Name (optional)" />
+    <div class="field">
+      <label for="voiceAuthor">Author</label>
+      <input id="voiceAuthor" type="text" placeholder="Name (optional)" />
+    </div>
 
-  <label>Story</label>
-  <textarea id="voiceEditor"></textarea>
+    <div class="field full">
+      <label for="voiceEditor">Story</label>
+      <textarea id="voiceEditor"></textarea>
+    </div>
 
-  <button id="publishVoiceBtn" type="button">Publish</button>
+    <div class="actions">
+      <button id="publishVoiceBtn" class="btn primary" type="button">Publish</button>
+      <button id="clearVoiceBtn" class="btn secondary" type="button">Clear</button>
+    </div>
+  </div>
 </section>
 
-<hr />
-
-<section>
-  <h2>Latest Voices</h2>
-  <div id="voicesFeed"></div>
+<section class="card" style="padding:18px; margin-top:16px;">
+  <div class="section-head">
+    <div>
+      <h3>Latest Voices</h3>
+      <p>Recently published posts.</p>
+    </div>
+  </div>
+  <div id="voicesFeed" class="voices-feed"></div>
 </section>
+
 
 
     <footer class="footer">
