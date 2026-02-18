@@ -77,5 +77,80 @@
   </main>
 
   <script src="./assets/js/app.js"></script>
+  <script src="../tinymce/tinymce.min.js"></script>
+<script>
+  tinymce.init({
+    selector: '#voiceEditor',
+    height: 350,
+    menubar: false,
+    plugins: 'lists link code',
+    toolbar: 'undo redo | bold italic underline | bullist numlist | link | code',
+    branding: false
+  });
+</script>
+  <script>
+  const STORAGE_KEY = 'cornerstone_voices_posts';
+
+  function loadPosts() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    catch { return []; }
+  }
+
+  function savePosts(posts) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, m => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[m]));
+  }
+
+  function renderPosts() {
+    const feed = document.getElementById('voicesFeed');
+    const posts = loadPosts().sort((a,b) => b.createdAt - a.createdAt);
+
+    if (!posts.length) {
+      feed.innerHTML = '<p>No posts yet.</p>';
+      return;
+    }
+
+    feed.innerHTML = posts.map(p => `
+      <article class="voice-post">
+        <h3>${escapeHtml(p.title)}</h3>
+        <div class="meta">
+          <span>${p.author ? escapeHtml(p.author) : 'Anonymous'}</span>
+          <span>•</span>
+          <span>${new Date(p.createdAt).toLocaleString()}</span>
+        </div>
+        <div class="content">${p.html}</div>
+      </article>
+    `).join('');
+  }
+
+  document.getElementById('publishVoiceBtn').addEventListener('click', () => {
+    const title = document.getElementById('voiceTitle').value.trim();
+    const author = document.getElementById('voiceAuthor').value.trim();
+    const editor = tinymce.get('voiceEditor');
+    const html = editor ? editor.getContent() : '';
+
+    if (!title) return alert('Please add a title.');
+    if (!html || html.replace(/<[^>]*>/g, '').trim().length === 0) return alert('Please write something.');
+
+    const posts = loadPosts();
+    posts.push({ title, author, html, createdAt: Date.now() });
+    savePosts(posts);
+
+    document.getElementById('voiceTitle').value = '';
+    document.getElementById('voiceAuthor').value = '';
+    editor.setContent('');
+
+    renderPosts();
+  });
+
+  renderPosts();
+</script>
+
+
 </body>
 </html>
