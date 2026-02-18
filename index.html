@@ -28,12 +28,10 @@
         <a data-nav href="submit.html#digest">Monthly Digest</a>
         <a data-nav href="board.html">Community Board</a>
 
-
         <button class="toggle" id="themeToggle" type="button" aria-label="Toggle theme">
           <span class="icon" id="themeIcon" aria-hidden="true"></span>
           <span id="themeLabel">Theme</span>
         </button>
-
       </nav>
     </div>
   </header>
@@ -60,7 +58,7 @@
 
         <div class="hero-actions" style="margin-top:14px; display:flex; gap:12px; flex-wrap:wrap;">
           <a class="btn primary" href="opportunities.html">Browse Opportunities</a>
-          <a class="btn ghost" href="submit_item.html">Submit an Item</a>
+          <a class="btn ghost" href="submit.html">Submit a Lead</a>
           <a class="btn ghost" href="board.html">Join the Community Board</a>
         </div>
 
@@ -89,6 +87,82 @@
       </div>
     </section>
 
+    <!-- QUOTE + RIDDLE OF THE DAY -->
+    <section class="card" style="padding:18px; margin-top:18px;">
+      <div class="section-head">
+        <div>
+          <h3>Daily Boost</h3>
+          <p>One quote + one cyber riddle — refreshed automatically each day.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:12px; display:grid; gap:12px; grid-template-columns: repeat(2, minmax(0, 1fr));">
+        <!-- Quote -->
+        <article class="item" style="padding:14px;">
+          <div class="item-top" style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+            <h4 style="margin:0;">Quote of the Day</h4>
+            <span class="tag green">Early-career</span>
+          </div>
+
+          <p id="qotdText" style="margin:10px 0 8px; font-size:1.05rem; line-height:1.5;">
+            <!-- populated by JS -->
+          </p>
+
+          <div class="meta" id="qotdBy" style="margin:0;"></div>
+
+          <div class="links" style="margin-top:10px;">
+            <a class="link" href="submit.html#digest">Get these in the Monthly Digest</a>
+          </div>
+        </article>
+
+        <!-- Riddle -->
+        <article class="item" style="padding:14px;">
+          <div class="item-top" style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+            <h4 style="margin:0;">Cyber Riddle of the Day</h4>
+            <span class="tag purple">DFIR brain</span>
+          </div>
+
+          <p class="meta" id="rotdPrompt" style="margin:10px 0 10px;">
+            <!-- populated by JS -->
+          </p>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn ghost" id="revealRiddleBtn" type="button" aria-expanded="false" aria-controls="rotdAnswer">
+              Reveal answer
+            </button>
+            <button class="btn secondary" id="newRiddleBtn" type="button" title="Shows a different riddle (does not affect the daily one)">
+              Shuffle
+            </button>
+          </div>
+
+          <div id="rotdAnswerWrap" style="margin-top:10px; display:none;">
+            <div class="meta" style="margin-bottom:6px;">Answer</div>
+            <p id="rotdAnswer" style="margin:0;"></p>
+            <div class="meta" id="rotdExplain" style="margin-top:8px;"></div>
+          </div>
+
+          <div class="links" style="margin-top:10px;">
+            <a class="link" href="resources.html">Study resources</a>
+            <a class="link" href="board.html">Discuss on the board</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="meta" style="margin-top:12px;">
+        Want your own quotes/riddles featured? <a class="link" href="submit.html">Submit one here</a>.
+      </div>
+
+      <style>
+        /* Small responsive tweak without touching your CSS file */
+        @media (max-width: 860px) {
+          .wrap section[style*="grid-template-columns: repeat(2"] > div,
+          section.card > div[style*="grid-template-columns: repeat(2"] {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      </style>
+    </section>
+
     <!-- PILLARS -->
     <section class="card" style="padding:18px; margin-top:18px;">
       <div class="section-head">
@@ -107,7 +181,7 @@
           <p>Scholarships, internships, and early-career doors worth walking through.</p>
           <div class="links">
             <a class="link" href="opportunities.html">Browse opportunities</a>
-            <a class="link" href="submit_item.html">Submit an opportunity</a>
+            <a class="link" href="submit.html">Submit an opportunity</a>
           </div>
         </article>
 
@@ -135,7 +209,6 @@
         </article>
       </div>
     </section>
-
 
     <!-- TRUST / ABOUT STRIP -->
     <section class="card" style="padding:18px; margin-top:18px;">
@@ -178,5 +251,118 @@
   </main>
 
   <script src="./assets/js/app.js"></script>
+
+  <!-- Daily Quote + Riddle logic (self-contained; no other files needed) -->
+  <script>
+    (function () {
+      // --- Quote Library (expand this list as much as you want) ---
+      // Format: { text: "...", by: "Name / Source" }
+      const QUOTES = [
+        { text: "Start where you are. Use what you have. Do what you can.", by: "Arthur Ashe" },
+        { text: "Consistency beats intensity when intensity isn’t consistent.", by: "Early-career reminder" },
+        { text: "If you can explain it clearly, you understand it deeply.", by: "DFIR mindset" },
+        { text: "Confidence comes from evidence—collect it.", by: "Cornerstone DFIR" },
+        { text: "You don’t have to know everything. You have to know how to find out.", by: "Early-career fieldcraft" }
+      ];
+
+      // --- Cyber Riddle Library (expand this list as much as you want) ---
+      // Format: { prompt: "...", answer: "...", explain: "..." }
+      const RIDDLES = [
+        {
+          prompt: "I’m not a password, but I can unlock your account. I’m stolen quietly, often reused, and I travel in pairs. What am I?",
+          answer: "A session cookie (or session token).",
+          explain: "Session tokens/cookies can be hijacked and replayed to access an account without knowing the password."
+        },
+        {
+          prompt: "I live in your headers, and I’m meant to protect you. Misconfigure me, and your browser might trust the wrong thing. What am I?",
+          answer: "A security header (e.g., CSP/HSTS).",
+          explain: "Security headers reduce risk; weak CSP or missing HSTS can enable attacks like injection or downgrade."
+        },
+        {
+          prompt: "You can’t see me in the file list, but I remember where you went, when you opened things, and sometimes what you searched. What am I?",
+          answer: "Artifacts/metadata (e.g., logs, registry, browser history).",
+          explain: "DFIR often relies on system and application artifacts that persist beyond what users see in folders."
+        },
+        {
+          prompt: "I’m a ‘normal’ request that looks harmless, but I carry a secret passenger. I help attackers blend in with real traffic. What am I?",
+          answer: "A living-off-the-land technique (LOLBin/legit tooling).",
+          explain: "Attackers often use legitimate tools/protocols to avoid detection and look like standard activity."
+        }
+      ];
+
+      // Deterministic daily index (based on local date)
+      function dayKeyLocal() {
+        const d = new Date();
+        // local midnight key:
+        return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+      }
+
+      function hashString(str) {
+        // Simple stable hash
+        let h = 0;
+        for (let i = 0; i < str.length; i++) {
+          h = (h * 31 + str.charCodeAt(i)) >>> 0;
+        }
+        return h;
+      }
+
+      function pickDaily(list, salt) {
+        const key = dayKeyLocal() + "|" + salt;
+        const idx = hashString(key) % list.length;
+        return { idx, item: list[idx] };
+      }
+
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      // Populate Quote of the Day
+      const dailyQuote = pickDaily(QUOTES, "quote");
+      setText("qotdText", "“" + dailyQuote.item.text + "”");
+      setText("qotdBy", "— " + dailyQuote.item.by);
+
+      // Populate Riddle of the Day
+      let dailyRiddle = pickDaily(RIDDLES, "riddle");
+      function renderRiddle(r) {
+        setText("rotdPrompt", r.prompt);
+        setText("rotdAnswer", r.answer);
+        setText("rotdExplain", r.explain || "");
+        // reset reveal state
+        const wrap = document.getElementById("rotdAnswerWrap");
+        const btn = document.getElementById("revealRiddleBtn");
+        if (wrap) wrap.style.display = "none";
+        if (btn) btn.setAttribute("aria-expanded", "false");
+        if (btn) btn.textContent = "Reveal answer";
+      }
+      renderRiddle(dailyRiddle.item);
+
+      // Reveal handler
+      const revealBtn = document.getElementById("revealRiddleBtn");
+      const answerWrap = document.getElementById("rotdAnswerWrap");
+      if (revealBtn && answerWrap) {
+        revealBtn.addEventListener("click", () => {
+          const isOpen = answerWrap.style.display !== "none";
+          answerWrap.style.display = isOpen ? "none" : "block";
+          revealBtn.setAttribute("aria-expanded", String(!isOpen));
+          revealBtn.textContent = isOpen ? "Reveal answer" : "Hide answer";
+        });
+      }
+
+      // Shuffle handler (just shows a different one; daily stays deterministic on refresh)
+      const shuffleBtn = document.getElementById("newRiddleBtn");
+      if (shuffleBtn) {
+        shuffleBtn.addEventListener("click", () => {
+          if (!RIDDLES.length) return;
+          let nextIdx = Math.floor(Math.random() * RIDDLES.length);
+          // Avoid repeating the currently shown daily one when possible
+          if (RIDDLES.length > 1 && nextIdx === dailyRiddle.idx) {
+            nextIdx = (nextIdx + 1) % RIDDLES.length;
+          }
+          renderRiddle(RIDDLES[nextIdx]);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
