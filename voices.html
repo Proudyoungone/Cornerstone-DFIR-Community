@@ -44,6 +44,29 @@
       <div id="articleList" class="grid3" aria-live="polite"></div>
     </section>
 
+    <section class="voices-admin">
+  <h2>Publish a Voice</h2>
+
+  <label>Title</label>
+  <input id="voiceTitle" type="text" placeholder="Post title" />
+
+  <label>Author</label>
+  <input id="voiceAuthor" type="text" placeholder="Name (optional)" />
+
+  <label>Story</label>
+  <textarea id="voiceEditor"></textarea>
+
+  <button id="publishVoiceBtn" type="button">Publish</button>
+</section>
+
+<hr />
+
+<section>
+  <h2>Latest Voices</h2>
+  <div id="voicesFeed"></div>
+</section>
+
+
     <footer class="footer">
       <div>© <span id="year"></span> Cornerstone DFIR</div>
       <div style="display:flex; gap:14px; flex-wrap:wrap;">
