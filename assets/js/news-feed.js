@@ -218,3 +218,12 @@ function escapeHtml(str) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+{
+  id: "hexordia",
+  name: "Hexordia Blog",
+  url: "https://www.hexordia.com/blog?format=rss",
+  homepage: "https://www.hexordia.com/blog/",
+  icon: "🔐",
+  enabled: true,
+},
+
