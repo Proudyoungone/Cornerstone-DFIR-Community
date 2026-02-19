@@ -600,3 +600,56 @@ html[data-theme="light"] input::placeholder{color: rgba(71,85,105,.9)}
   margin-top: 14px;
 }
 
+/* ===== Force uniform News Feed cards (override-safe) ===== */
+
+/* Make sure the grid behaves consistently */
+#newsGrid.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  #newsGrid.news-grid { grid-template-columns: 1fr; }
+}
+
+/* Force every rendered article card to the same height */
+#newsGrid.news-grid > article.news-card.card {
+  height: 320px !important;          /* change to 340/360 if you want taller */
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;       /* critical: prevents long text from expanding card */
+}
+
+/* Title: clamp to 2 lines */
+#newsGrid.news-grid > article.news-card.card .news-title {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+  overflow: hidden !important;
+}
+
+/* Description: clamp to 4 lines */
+#newsGrid.news-grid > article.news-card.card .news-desc {
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 4 !important;
+
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+
+  /* Helps prevent weird long-word overflow */
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Keep footer pinned */
+#newsGrid.news-grid > article.news-card.card .news-footer {
+  margin-top: 12px !important;
+  flex: 0 0 auto !important;
+}
+
+
