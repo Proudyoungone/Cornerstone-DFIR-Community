@@ -416,3 +416,62 @@ html[data-theme="light"] input::placeholder{color: rgba(71,85,105,.9)}
   .voices-form .actions .btn{ flex:1; }
 }
 
+.prompt-panel{
+  margin: 10px 0 16px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.15);
+}
+
+.prompt-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 10px;
+}
+
+.prompt-head h4{ margin:0; }
+
+.prompt-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.prompt-card{
+  text-align:left;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.18);
+  cursor:pointer;
+}
+
+.prompt-card:hover{
+  border-color: rgba(255,255,255,.18);
+  background: rgba(0,0,0,.24);
+}
+
+.prompt-card .tag{
+  display:inline-block;
+  font-size: .8rem;
+  opacity: .8;
+  margin-bottom: 6px;
+}
+
+.prompt-card .title{
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.prompt-card .desc{
+  margin: 0;
+  opacity: .9;
+  font-size: .95rem;
+}
+
+@media (max-width: 900px){
+  .prompt-grid{ grid-template-columns: 1fr; }
+}
