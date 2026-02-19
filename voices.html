@@ -96,14 +96,15 @@
     </footer>
   </main>
 
-  <script src="./assets/js/app.js"></script>
+<script src="./assets/js/app.js"></script>
 <script src="./tinymce/tinymce.min.js"></script>
 
 <script>
+  /* ---------- TinyMCE Init ---------- */
   if (window.tinymce) {
     tinymce.init({
       selector: '#voiceEditor',
-      height: 350,
+      height: 380,
       menubar: false,
       plugins: 'lists link code',
       toolbar: 'undo redo | bold italic underline | bullist numlist | link | code',
@@ -111,16 +112,20 @@
       skin: 'oxide-dark',
       content_css: 'dark'
     });
+  } else {
+    console.warn('TinyMCE did not load. Check ./tinymce/tinymce.min.js path.');
   }
-</script>
 
-<script>
+  /* ---------- Voices Logic ---------- */
   const STORAGE_KEY = 'cornerstone_voices_posts';
   const $ = (id) => document.getElementById(id);
 
   function loadPosts() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-    catch { return []; }
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    } catch {
+      return [];
+    }
   }
 
   function savePosts(posts) {
@@ -129,7 +134,11 @@
 
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, m => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#39;'
     }[m]));
   }
 
@@ -149,21 +158,24 @@
     const feed = $('voicesFeed');
     if (!feed) return;
 
-    const posts = loadPosts().sort((a,b) => b.createdAt - a.createdAt);
+    const posts = loadPosts().sort((a, b) => b.createdAt - a.createdAt);
 
-    feed.innerHTML = posts.length
-      ? posts.map(p => `
-          <article class="voice-post">
-            <h3>${escapeHtml(p.title)}</h3>
-            <div class="meta">
-              <span>${p.author ? escapeHtml(p.author) : 'Anonymous'}</span>
-              <span>•</span>
-              <span>${new Date(p.createdAt).toLocaleString()}</span>
-            </div>
-            <div class="content">${p.html}</div>
-          </article>
-        `).join('')
-      : '<p>No posts yet.</p>';
+    if (!posts.length) {
+      feed.innerHTML = '<p>No posts yet.</p>';
+      return;
+    }
+
+    feed.innerHTML = posts.map(p => `
+      <article class="voice-post">
+        <h3>${escapeHtml(p.title)}</h3>
+        <div class="meta">
+          <span>${p.author ? escapeHtml(p.author) : 'Anonymous'}</span>
+          <span>•</span>
+          <span>${new Date(p.createdAt).toLocaleString()}</span>
+        </div>
+        <div class="content">${p.html}</div>
+      </article>
+    `).join('');
   }
 
   function wireButtons() {
@@ -173,7 +185,12 @@
     const authorEl = $('voiceAuthor');
 
     if (!publishBtn || !clearBtn || !titleEl) {
-      console.error('Wiring failed (missing elements):', { publishBtn, clearBtn, titleEl, authorEl });
+      console.error('Voices wiring failed:', {
+        publishBtn,
+        clearBtn,
+        titleEl,
+        authorEl
+      });
       return;
     }
 
@@ -183,10 +200,17 @@
       const html = getEditorHtml();
 
       if (!title) return alert('Please add a title.');
-      if (!html || html.replace(/<[^>]*>/g,'').trim().length === 0) return alert('Please write something.');
+      if (!html || html.replace(/<[^>]*>/g,'').trim().length === 0)
+        return alert('Please write something.');
 
       const posts = loadPosts();
-      posts.push({ title, author, html, createdAt: Date.now() });
+      posts.push({
+        title,
+        author,
+        html,
+        createdAt: Date.now()
+      });
+
       savePosts(posts);
 
       titleEl.value = '';
@@ -210,6 +234,7 @@
     wireButtons();
   }
 </script>
+
 
 
 </body>
