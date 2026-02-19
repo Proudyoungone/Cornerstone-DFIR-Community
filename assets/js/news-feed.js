@@ -37,6 +37,56 @@ const FEEDS = [
 // use a GitHub Action later to generate a local JSON file instead.
 const RSS2JSON = (rssUrl) =>
   `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+const ALLORIGINS = (url) =>
+  `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+
+function textFromNode(node, tagName) {
+  const el = node.getElementsByTagName(tagName)[0];
+  return el ? (el.textContent || "").trim() : "";
+}
+
+function parseRssXmlToItems(xmlText, feed) {
+  const doc = new DOMParser().parseFromString(xmlText, "text/xml");
+
+  // RSS: <item> ... </item>
+  const rssItems = Array.from(doc.getElementsByTagName("item"));
+  if (rssItems.length) {
+    return rssItems.slice(0, 12).map(n => ({
+      sourceId: feed.id,
+      sourceName: feed.name,
+      sourceIcon: feed.icon || "📰",
+      homepage: feed.homepage,
+      title: textFromNode(n, "title") || "Untitled",
+      description: stripHtml(
+        textFromNode(n, "description") || textFromNode(n, "content:encoded") || ""
+      ),
+      pubDate: textFromNode(n, "pubDate") || null,
+      link: textFromNode(n, "link") || feed.homepage,
+    }));
+  }
+
+  // Atom: <entry> ... </entry>
+  const atomEntries = Array.from(doc.getElementsByTagName("entry"));
+  if (atomEntries.length) {
+    return atomEntries.slice(0, 12).map(n => {
+      const linkEl = n.getElementsByTagName("link")[0];
+      const href = linkEl?.getAttribute("href") || "";
+      return {
+        sourceId: feed.id,
+        sourceName: feed.name,
+        sourceIcon: feed.icon || "📰",
+        homepage: feed.homepage,
+        title: textFromNode(n, "title") || "Untitled",
+        description: stripHtml(textFromNode(n, "summary") || textFromNode(n, "content") || ""),
+        pubDate: textFromNode(n, "published") || textFromNode(n, "updated") || null,
+        link: href || feed.homepage,
+      };
+    });
+  }
+
+  throw new Error("No RSS/Atom items found");
+}
+
 
 const els = {
   grid: document.getElementById("newsGrid"),
