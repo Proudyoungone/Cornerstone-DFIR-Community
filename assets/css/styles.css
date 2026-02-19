@@ -543,3 +543,60 @@ html[data-theme="light"] input::placeholder{color: rgba(71,85,105,.9)}
   border-radius: 10px;
   font-size: .9rem;
 }
+/* ==============================
+   Uniform News Feed Cards
+   ============================== */
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Force identical card height */
+.news-card {
+  height: 340px;                 /* Adjust if you want taller/shorter */
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+}
+
+/* Keep header tight */
+.news-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+/* Clamp title to 2 lines */
+.news-title {
+  margin: 10px 0 8px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Clamp description to 4 lines */
+.news-desc {
+  flex-grow: 1;                  /* Pushes footer down */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;         /* Controls how much preview text */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: 0.9;
+  line-height: 1.35;
+}
+
+/* Keep footer pinned to bottom */
+.news-footer {
+  margin-top: 14px;
+}
+
