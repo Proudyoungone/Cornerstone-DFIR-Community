@@ -47,6 +47,14 @@
   <section class="card" style="padding:18px;">
   <div class="section-head">
     <div>
+      <div class="prompt-panel" aria-label="Topic prompts">
+  <div class="prompt-head">
+    <h4>Need an idea?</h4>
+    <button id="randomPromptBtn" class="btn secondary" type="button">Random prompt</button>
+  </div>
+  <div id="promptGrid" class="prompt-grid"></div>
+</div>
+
       <h3>Publish a Voice</h3>
       <p>Create a new post for The Investigator’s Path.</p>
     </div>
@@ -200,6 +208,113 @@
     if (authorEl) authorEl.value = '';
     if (editor) editor.setContent('');
   }
+const PROMPTS = [
+  {
+    tag: "Early-career",
+    title: "My first tough case lesson",
+    desc: "What surprised you, and what would you tell a new analyst?",
+    template: `
+      <h3>What happened</h3><p></p>
+      <h3>What I learned</h3><p></p>
+      <h3>What I’d do differently</h3><p></p>
+      <h3>Advice for others</h3><ul><li></li></ul>
+    `
+  },
+  {
+    tag: "Tools & workflow",
+    title: "A workflow that saved me hours",
+    desc: "A repeatable process, checklist, or habit worth sharing.",
+    template: `
+      <h3>Context</h3><p></p>
+      <h3>Steps</h3><ol><li></li></ol>
+      <h3>Common pitfalls</h3><ul><li></li></ul>
+      <h3>Template / checklist</h3><p></p>
+    `
+  },
+  {
+    tag: "Court & reporting",
+    title: "How I write defensible reports",
+    desc: "Structure, wording, and how you handle uncertainty.",
+    template: `
+      <h3>Report structure</h3><p></p>
+      <h3>Language I avoid</h3><ul><li></li></ul>
+      <h3>How I document assumptions</h3><p></p>
+      <h3>Example phrasing</h3><p></p>
+    `
+  },
+  {
+    tag: "Career",
+    title: "Breaking in: what actually worked",
+    desc: "Resume, portfolio, networking, interviews—what moved the needle?",
+    template: `
+      <h3>My starting point</h3><p></p>
+      <h3>Actions that helped</h3><ul><li></li></ul>
+      <h3>What I’d skip</h3><p></p>
+      <h3>One actionable takeaway</h3><p></p>
+    `
+  },
+  {
+    tag: "Mindset",
+    title: "Handling imposter syndrome in DFIR",
+    desc: "What you did when you felt behind—and what helped.",
+    template: `
+      <h3>What I felt</h3><p></p>
+      <h3>What helped</h3><ul><li></li></ul>
+      <h3>What I wish I knew sooner</h3><p></p>
+    `
+  },
+  {
+    tag: "Ethics",
+    title: "Privacy, scope, and staying defensible",
+    desc: "How you keep boundaries clear and ethical.",
+    template: `
+      <h3>Where scope gets tricky</h3><p></p>
+      <h3>How I document decisions</h3><p></p>
+      <h3>Red lines</h3><ul><li></li></ul>
+    `
+  }
+];
+
+function renderPromptGrid() {
+  const grid = document.getElementById('promptGrid');
+  if (!grid) return;
+
+  grid.innerHTML = PROMPTS.map((p, idx) => `
+    <button class="prompt-card" type="button" data-idx="${idx}">
+      <div class="tag">${p.tag}</div>
+      <div class="title">${p.title}</div>
+      <p class="desc">${p.desc}</p>
+    </button>
+  `).join('');
+
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('.prompt-card');
+    if (!btn) return;
+    applyPrompt(Number(btn.dataset.idx));
+  });
+}
+
+function applyPrompt(i) {
+  const p = PROMPTS[i];
+  const titleEl = document.getElementById('voiceTitle');
+  if (titleEl && !titleEl.value.trim()) titleEl.value = p.title;
+
+  const editor = window.tinymce?.get('voiceEditor');
+  if (editor) {
+    // Put prompt at top only if editor is empty-ish
+    const hasText = editor.getContent({ format: 'text' }).trim().length > 0;
+    if (!hasText) editor.setContent(p.template);
+    else editor.insertContent(p.template);
+    editor.focus();
+  }
+}
+
+document.getElementById('randomPromptBtn')?.addEventListener('click', () => {
+  const i = Math.floor(Math.random() * PROMPTS.length);
+  applyPrompt(i);
+});
+
+renderPromptGrid();
 
   function wireButtons() {
     const publishBtn = $('publishVoiceBtn');
