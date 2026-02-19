@@ -98,6 +98,7 @@
 
 <script src="./assets/js/app.js"></script>
 <script src="./tinymce/tinymce.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
   /* ---------- TinyMCE Init ---------- */
@@ -116,49 +117,38 @@
     console.warn('TinyMCE did not load. Check ./tinymce/tinymce.min.js path.');
   }
 
-  /* ---------- Voices Logic ---------- */
-  const STORAGE_KEY = 'cornerstone_voices_posts';
+  /* ---------- Supabase Voices Backend ---------- */
+  const SUPABASE_URL = "https://heovhaawakbuyydolekl.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_-PBi0YDFGSiUfBjhVlaYOQ_yF3jx7KO";
+
+  const supa = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   const $ = (id) => document.getElementById(id);
-
-  function loadPosts() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    } catch {
-      return [];
-    }
-  }
-
-  function savePosts(posts) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-  }
 
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, m => ({
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      '"':'&quot;',
-      "'":'&#39;'
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
     }[m]));
   }
 
-  function getEditorHtml() {
-    const ed = window.tinymce?.get('voiceEditor');
-    return ed ? ed.getContent() : ($('voiceEditor')?.value || '');
+  async function fetchApprovedPosts() {
+    const { data, error } = await supa
+      .from('voices')
+      .select('id,title,author,content,status,created_at')
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error("Fetch error:", error);
+      return [];
+    }
+    return data || [];
   }
 
-  function clearEditor() {
-    const ed = window.tinymce?.get('voiceEditor');
-    if (ed) ed.setContent('');
-    const ta = $('voiceEditor');
-    if (ta) ta.value = '';
-  }
-
-  function renderPosts() {
+  async function renderPosts() {
     const feed = $('voicesFeed');
     if (!feed) return;
 
-    const posts = loadPosts().sort((a, b) => b.createdAt - a.createdAt);
+    const posts = await fetchApprovedPosts();
 
     if (!posts.length) {
       feed.innerHTML = '<p>No posts yet.</p>';
@@ -171,58 +161,61 @@
         <div class="meta">
           <span>${p.author ? escapeHtml(p.author) : 'Anonymous'}</span>
           <span>•</span>
-          <span>${new Date(p.createdAt).toLocaleString()}</span>
+          <span>${new Date(p.created_at).toLocaleString()}</span>
         </div>
-        <div class="content">${p.html}</div>
+        <div class="content">${p.content}</div>
       </article>
     `).join('');
+  }
+
+  async function submitPost() {
+    const titleEl = $('voiceTitle');
+    const authorEl = $('voiceAuthor');
+    const editor = window.tinymce?.get('voiceEditor');
+
+    const title = titleEl ? titleEl.value.trim() : '';
+    const author = authorEl ? authorEl.value.trim() : '';
+    const content = editor ? editor.getContent() : ($('voiceEditor')?.value || '');
+
+    if (!title) return alert('Please add a title.');
+    if (!content || content.replace(/<[^>]*>/g,'').trim().length === 0) {
+      return alert('Please write something.');
+    }
+
+    const { error } = await supa.from('voices').insert([{
+      title,
+      author,
+      content,
+      status: 'pending'
+    }]);
+
+    if (error) {
+      console.error("Insert error:", error);
+      alert("Submission failed. Check console for details.");
+      return;
+    }
+
+    alert("Submitted for review!");
+    if (titleEl) titleEl.value = '';
+    if (authorEl) authorEl.value = '';
+    if (editor) editor.setContent('');
   }
 
   function wireButtons() {
     const publishBtn = $('publishVoiceBtn');
     const clearBtn = $('clearVoiceBtn');
-    const titleEl = $('voiceTitle');
-    const authorEl = $('voiceAuthor');
 
-    if (!publishBtn || !clearBtn || !titleEl) {
-      console.error('Voices wiring failed:', {
-        publishBtn,
-        clearBtn,
-        titleEl,
-        authorEl
-      });
-      return;
-    }
+    if (publishBtn) publishBtn.addEventListener('click', submitPost);
 
-    publishBtn.addEventListener('click', () => {
-      const title = titleEl.value.trim();
-      const author = (authorEl?.value || '').trim();
-      const html = getEditorHtml();
-
-      if (!title) return alert('Please add a title.');
-      if (!html || html.replace(/<[^>]*>/g,'').trim().length === 0)
-        return alert('Please write something.');
-
-      const posts = loadPosts();
-      posts.push({
-        title,
-        author,
-        html,
-        createdAt: Date.now()
-      });
-
-      savePosts(posts);
-
-      titleEl.value = '';
+    if (clearBtn) clearBtn.addEventListener('click', () => {
+      const titleEl = $('voiceTitle');
+      const authorEl = $('voiceAuthor');
+      if (titleEl) titleEl.value = '';
       if (authorEl) authorEl.value = '';
-      clearEditor();
-      renderPosts();
-    });
-
-    clearBtn.addEventListener('click', () => {
-      titleEl.value = '';
-      if (authorEl) authorEl.value = '';
-      clearEditor();
+      const editor = window.tinymce?.get('voiceEditor');
+      if (editor) editor.setContent('');
+      const ta = $('voiceEditor');
+      if (ta) ta.value = '';
     });
 
     renderPosts();
@@ -234,8 +227,6 @@
     wireButtons();
   }
 </script>
-
-
 
 </body>
 </html>
