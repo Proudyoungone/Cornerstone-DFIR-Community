@@ -537,6 +537,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   initConferences();
   initResources();
 
+  // NEW:
   initDailyQuote();
   initDailyRiddle();
 });
