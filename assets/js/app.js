@@ -427,106 +427,6 @@ async function initResources(){
 }
 
 // ---------------------------
-// DAILY QUOTE + RIDDLE (uses your existing IDs)
-// ---------------------------
-function utcDayIndex(){
-  const now = new Date();
-  return Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
-}
-
-// QUOTE: expects #qotdText and optional #qotdAuthor
-async function initDailyQuote(){
-  const textEl = document.getElementById("qotdText");
-  const authorEl = document.getElementById("qotdAuthor");
-  if(!textEl) return; // not on this page
-
-  try{
-    const quotes = await getJSON("./data/quotes.json");
-    if(!Array.isArray(quotes) || quotes.length === 0) throw new Error("quotes.json is empty or not an array");
-
-    const q = quotes[utcDayIndex() % quotes.length];
-
-    if(typeof q === "string"){
-      textEl.textContent = q;
-      if(authorEl) authorEl.textContent = "";
-    }else{
-      textEl.textContent = q.text || "";
-      if(authorEl) authorEl.textContent = q.author ? `— ${q.author}` : "";
-    }
-  }catch(e){
-    console.error("Quote load failed:", e);
-    textEl.textContent = "Quote failed to load. (Check /data/quotes.json and run a local server.)";
-    if(authorEl) authorEl.textContent = "";
-  }
-}
-
-// RIDDLE: uses #rotdPrompt, #revealRiddleBtn, #newRiddleBtn, and #rotdAnswer (creates if missing)
-async function initDailyRiddle(){
-  const promptEl = document.getElementById("rotdPrompt");
-  const revealBtn = document.getElementById("revealRiddleBtn");
-  const shuffleBtn = document.getElementById("newRiddleBtn");
-  if(!promptEl) return; // not on this page
-
-  // Ensure we have an answer element to control
-  let answerEl = document.getElementById("rotdAnswer");
-  if(!answerEl){
-    answerEl = document.createElement("p");
-    answerEl.id = "rotdAnswer";
-    answerEl.className = "fine";
-    answerEl.hidden = true;
-    answerEl.style.margin = "8px 0 0";
-    promptEl.insertAdjacentElement("afterend", answerEl);
-  }
-
-  let riddles = [];
-  try{
-    riddles = await getJSON("./data/riddles.json");
-    if(!Array.isArray(riddles) || riddles.length === 0) throw new Error("riddles.json is empty or not an array");
-  }catch(e){
-    console.error("Riddle load failed:", e);
-    promptEl.textContent = "Riddle failed to load. (Check /data/riddles.json and run a local server.)";
-    answerEl.hidden = true;
-    return;
-  }
-
-  function normalize(r){
-    // supports: "string" OR {question,answer}
-    if(typeof r === "string") return { question: r, answer: "" };
-    return { question: r.question || "", answer: r.answer || "" };
-  }
-
-  function setRiddleByIndex(i){
-    const r = normalize(riddles[i % riddles.length]);
-    promptEl.textContent = r.question || "—";
-    answerEl.textContent = r.answer || "";
-    answerEl.hidden = true;
-    if(revealBtn) revealBtn.setAttribute("aria-expanded", "false");
-  }
-
-  const dailyIndex = utcDayIndex() % riddles.length;
-  setRiddleByIndex(dailyIndex);
-
-  revealBtn?.addEventListener("click", () => {
-    const r = normalize(riddles[dailyIndex]);
-    if(!r.answer){
-      // If there is no answer in your JSON, still toggle the area so it feels responsive
-      answerEl.textContent = "No answer provided for this riddle yet.";
-    } else {
-      answerEl.textContent = r.answer;
-    }
-    answerEl.hidden = !answerEl.hidden;
-    revealBtn.setAttribute("aria-expanded", answerEl.hidden ? "false" : "true");
-    revealBtn.textContent = answerEl.hidden ? "Reveal answer" : "Hide answer";
-  });
-
-  shuffleBtn?.addEventListener("click", () => {
-    const rand = Math.floor(Math.random() * riddles.length);
-    setRiddleByIndex(rand);
-    if(revealBtn) revealBtn.textContent = "Reveal answer";
-  });
-}
-
-// ---------------------------
 // INIT
 // ---------------------------
 document.addEventListener("DOMContentLoaded",()=>{
@@ -537,7 +437,4 @@ document.addEventListener("DOMContentLoaded",()=>{
   initConferences();
   initResources();
 
-  // NEW:
-  initDailyQuote();
-  initDailyRiddle();
 });
