@@ -123,12 +123,13 @@
             <span class="tag purple">DFIR brain</span>
           </div>
 
-            <p class="fine" id="rotdAnswer" hidden style="margin:8px 0 0;">
-              <!-- answer populated by JS -->
-            </p>
+          <!-- ✅ YOU WERE MISSING THIS -->
+          <p class="meta" id="rotdPrompt" style="margin:10px 0 10px;">
+            <!-- populated by JS -->
+          </p>
 
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="btn ghost" id="revealRiddleBtn" type="button" aria-expanded="false" aria-controls="rotdAnswer">
+            <button class="btn ghost" id="revealRiddleBtn" type="button" aria-expanded="false" aria-controls="rotdAnswerWrap">
               Reveal answer
             </button>
             <button class="btn secondary" id="newRiddleBtn" type="button" title="Shows a different riddle (does not affect the daily one)">
@@ -136,9 +137,10 @@
             </button>
           </div>
 
+          <!-- ✅ FIX: Only ONE answer element (no duplicate IDs) -->
           <div id="rotdAnswerWrap" style="margin-top:10px; display:none;">
             <div class="meta" style="margin-bottom:6px;">Answer</div>
-            <p id="rotdAnswer" style="margin:0;"></p>
+            <p id="rotdAnswerText" style="margin:0;"></p>
             <div class="meta" id="rotdExplain" style="margin-top:8px;"></div>
           </div>
 
@@ -156,7 +158,6 @@
       <style>
         /* Small responsive tweak without touching your CSS file */
         @media (max-width: 860px) {
-          .wrap section[style*="grid-template-columns: repeat(2"] > div,
           section.card > div[style*="grid-template-columns: repeat(2"] {
             grid-template-columns: 1fr !important;
           }
@@ -253,7 +254,7 @@
 
   <script src="./assets/js/app.js"></script>
 
-  <!-- Daily Quote + Riddle logic (self-contained; no other files needed) -->
+  <!-- Daily Quote + Riddle logic (self-contained; GitHub Pages friendly) -->
   <script>
     (function () {
       // --- Quote Library (expand this list as much as you want) ---
@@ -263,101 +264,13 @@
         { text: "Consistency beats intensity when intensity isn’t consistent.", by: "Early-career reminder" },
         { text: "If you can explain it clearly, you understand it deeply.", by: "DFIR mindset" },
         { text: "Confidence comes from evidence—collect it.", by: "Cornerstone DFIR" },
-        { text: "You don’t have to know everything. You have to know how to find out.", by: "Early-career fieldcraft" }
-        { text: "Start where you are. Use what you have. Do what you can.", by: "Arthur Ashe" },
-{ text: "The only way to do great work is to love what you do.", by: "Steve Jobs" },
-{ text: "Discipline is choosing between what you want now and what you want most.", by: "Abraham Lincoln (attributed)" },
-{ text: "Success is the sum of small efforts repeated day in and day out.", by: "Robert Collier" },
-{ text: "Excellence is never an accident.", by: "Aristotle (attributed)" },
-{ text: "If you can’t explain it simply, you don’t understand it well enough.", by: "Albert Einstein (attributed)" },
-{ text: "Quality is not an act, it is a habit.", by: "Aristotle (attributed)" },
-{ text: "Details matter. It’s worth waiting to get it right.", by: "Steve Jobs" },
-{ text: "Confidence comes from preparation.", by: "John Wooden" },
-{ text: "Opportunities don’t happen. You create them.", by: "Chris Grosser" },
-{ text: "The expert in anything was once a beginner.", by: "Helen Hayes" },
-{ text: "The more you practice, the luckier you get.", by: "Gary Player" },
-{ text: "Small disciplines repeated with consistency lead to great achievements.", by: "John C. Maxwell" },
-{ text: "Work hard in silence. Let success make the noise.", by: "Frank Ocean (attributed)" },
-{ text: "Patience is not passive; on the contrary, it is concentrated strength.", by: "Bruce Lee" },
-{ text: "Preparation is the key to confidence.", by: "Professional Principle" },
-{ text: "Clarity is power.", by: "Tony Robbins" },
-{ text: "Amateurs practice until they get it right. Professionals practice until they can’t get it wrong.", by: "Professional Discipline" },
-{ text: "You don’t rise to the level of your goals. You fall to the level of your systems.", by: "James Clear" },
-{ text: "Accuracy builds credibility.", by: "Forensic Principle" },
-{ text: "Well done is better than well said.", by: "Benjamin Franklin" },
-{ text: "The future depends on what you do today.", by: "Mahatma Gandhi (attributed)" },
-{ text: "Success usually comes to those who are too busy to be looking for it.", by: "Henry David Thoreau" },
-{ text: "Simplicity is the ultimate sophistication.", by: "Leonardo da Vinci (attributed)" },
-{ text: "Without data, you’re just another person with an opinion.", by: "W. Edwards Deming" },
-{ text: "Stay hungry. Stay foolish.", by: "Steve Jobs" },
-{ text: "Process protects performance.", by: "Operational Insight" },
-{ text: "The difference between ordinary and extraordinary is that little extra.", by: "Jimmy Johnson" },
-{ text: "Excellence is doing ordinary things extraordinarily well.", by: "John W. Gardner" },
-{ text: "Habits shape mastery.", by: "Professional Reflection" },
-{ text: "The quieter you become, the more you can hear.", by: "Ram Dass" },
-{ text: "Effort is a choice.", by: "Professional Insight" },
-{ text: "What gets measured gets improved.", by: "Peter Drucker" },
-{ text: "Stay curious.", by: "Albert Einstein (attributed)" },
-{ text: "Integrity is doing the right thing when no one is watching.", by: "C.S. Lewis (attributed)" },
-{ text: "Focus on being productive instead of busy.", by: "Tim Ferriss" },
-{ text: "Precision is not optional.", by: "Forensic Standard" },
-{ text: "In God we trust. All others must bring data.", by: "W. Edwards Deming (attributed)" },
-{ text: "The man who moves a mountain begins by carrying away small stones.", by: "Confucius (attributed)" },
-{ text: "Stay teachable.", by: "Professional Reminder" },
-{ text: "Excellence is the gradual result of always striving to do better.", by: "Pat Riley" },
-{ text: "You miss 100% of the shots you don’t take.", by: "Wayne Gretzky" },
-{ text: "Discipline equals freedom.", by: "Jocko Willink" },
-{ text: "Calm is a superpower.", by: "Professional Reflection" },
-{ text: "Master the fundamentals.", by: "Technical Discipline" },
-{ text: "The best preparation for tomorrow is doing your best today.", by: "H. Jackson Brown Jr." },
-{ text: "Hard work beats talent when talent doesn’t work hard.", by: "Tim Notke" },
-{ text: "Reputation is built one decision at a time.", by: "Professional Insight" },
-{ text: "Be so good they can’t ignore you.", by: "Steve Martin" },
-{ text: "Accuracy over speed.", by: "Forensic Principle" },
-{ text: "Consistency compounds.", by: "Professional Reflection" },
-{ text: "A goal without a plan is just a wish.", by: "Antoine de Saint-Exupéry (attributed)" },
-{ text: "Strength lies in differences, not in similarities.", by: "Stephen Covey" },
-{ text: "Learning never exhausts the mind.", by: "Leonardo da Vinci (attributed)" },
-{ text: "Great things are done by a series of small things brought together.", by: "Vincent van Gogh (attributed)" },
-{ text: "Attention to detail separates professionals from amateurs.", by: "Professional Insight" },
-{ text: "Action cures fear.", by: "David J. Schwartz" },
-{ text: "Don’t let what you cannot do interfere with what you can do.", by: "John Wooden" },
-{ text: "Systems beat motivation.", by: "Professional Principle" },
-{ text: "Prepared minds see opportunities.", by: "Louis Pasteur (inspired)" },
-{ text: "Progress, not perfection.", by: "Professional Reminder" },
-{ text: "Trust is built through consistency.", by: "Professional Insight" },
-{ text: "The fundamentals win.", by: "Operational Wisdom" },
-{ text: "Stay disciplined.", by: "Professional Reflection" },
-{ text: "You become what you repeatedly do.", by: "Will Durant (inspired by Aristotle)" },
-{ text: "Be reliable.", by: "Professional Identity" },
-{ text: "Clarity prevents error.", by: "Technical Insight" },
-{ text: "Calm thinking prevents fast mistakes.", by: "Operational Insight" },
-{ text: "Depth over noise.", by: "Professional Reflection" },
-{ text: "Evidence first.", by: "Forensic Ethic" },
-{ text: "Slow is smooth. Smooth is fast.", by: "Military Proverb" },
-{ text: "Learn the why, not just the how.", by: "Technical Discipline" },
-{ text: "Trust your process.", by: "Professional Insight" },
-{ text: "Preparedness reduces pressure.", by: "Operational Principle" },
-{ text: "Professionalism compounds.", by: "Career Insight" },
-{ text: "Respect the details.", by: "Forensic Reminder" },
-{ text: "The basics scale.", by: "Technical Principle" },
-{ text: "Be thorough.", by: "Professional Standard" },
-{ text: "Practice builds confidence.", by: "Career Insight" },
-{ text: "Ask better questions.", by: "Investigative Principle" },
-{ text: "Measure twice. Conclude once.", by: "Professional Reflection" },
-{ text: "Clarity beats complexity.", by: "Professional Insight" },
-{ text: "Stay steady under pressure.", by: "Operational Wisdom" },
-{ text: "Accuracy earns trust.", by: "Forensic Principle" },
-{ text: "Small improvements add up.", by: "Career Reflection" },
-{ text: "Preparation prevents panic.", by: "Operational Insight" },
-{ text: "Think critically.", by: "Professional Reminder" },
-{ text: "Be precise.", by: "Forensic Standard" },
-{ text: "Learn continuously.", by: "Professional Growth" },
-{ text: "Refinement is mastery.", by: "Technical Reflection" },
-{ text: "Strong foundations support complex work.", by: "Professional Insight" },
-{ text: "Calm minds see patterns.", by: "Investigative Reflection" },
-{ text: "Professional growth is built daily.", by: "Career Insight" }
+        { text: "You don’t have to know everything. You have to know how to find out.", by: "Early-career fieldcraft" },
 
+        { text: "The only way to do great work is to love what you do.", by: "Steve Jobs" },
+        { text: "Success is the sum of small efforts repeated day in and day out.", by: "Robert Collier" },
+        { text: "Without data, you’re just another person with an opinion.", by: "W. Edwards Deming" },
+        { text: "Be so good they can’t ignore you.", by: "Steve Martin" },
+        { text: "Discipline equals freedom.", by: "Jocko Willink" }
       ];
 
       // --- Cyber Riddle Library (expand this list as much as you want) ---
@@ -379,122 +292,28 @@
           explain: "DFIR often relies on system and application artifacts that persist beyond what users see in folders."
         },
         {
-          prompt: "I’m a ‘normal’ request that looks harmless, but I carry a secret passenger. I help attackers blend in with real traffic. What am I?",
+          prompt: "I’m ‘normal’ activity that looks harmless, but I carry a secret passenger. I help attackers blend in with real traffic. What am I?",
           answer: "A living-off-the-land technique (LOLBin/legit tooling).",
           explain: "Attackers often use legitimate tools/protocols to avoid detection and look like standard activity."
-        }
+        },
         {
-prompt: "I live in RAM and disappear when power fades. Catch me quickly or I’m gone forever. What am I?",
-answer: "Volatile memory data.",
-explain: "RAM data is lost when a device powers off, making live acquisition critical."
-},
-{
-prompt: "I look harmless in a folder, but when clicked I execute. My name may not match my purpose. What am I?",
-answer: "A disguised executable (malware).",
-explain: "Malware often masquerades as benign files to trick users."
-},
-{
-prompt: "I track your browsing without being history. I’m small, persistent, and travel with requests. What am I?",
-answer: "A cookie.",
-explain: "Cookies store session and tracking information in browsers."
-},
-{
-prompt: "I’m not a door, but I must be closed to keep attackers out. What am I?",
-answer: "An open port.",
-explain: "Open network ports can expose services to attackers."
-},
-{
-prompt: "You won’t see me in a GUI, but I record every connection. What am I?",
-answer: "A network log.",
-explain: "Logs record network activity behind the scenes."
-},
-{
-prompt: "I’m invisible to most users, but analysts love me. I remember deleted things. What am I?",
-answer: "Unallocated space.",
-explain: "Deleted files may remain recoverable in unallocated disk space."
-},
-{
-prompt: "I’m not a timeline, but I tell a story in order. What am I?",
-answer: "Event logs.",
-explain: "Logs provide chronological evidence of system activity."
-},
-{
-prompt: "I’m not malicious by default, but attackers use me to blend in. What am I?",
-answer: "A legitimate system tool (LOLBin).",
-explain: "Living-off-the-land binaries help attackers evade detection."
-},
-{
-prompt: "I’m tiny, but I prove integrity. Change one bit and I change entirely. What am I?",
-answer: "A hash value.",
-explain: "Hashes verify data integrity; any change alters the hash."
-},
-{
-prompt: "I’m a copy made for safety, but I must be exact. What am I?",
-answer: "A forensic image.",
-explain: "Forensic imaging preserves data without altering the original."
-},
-{
-prompt: "I’m not a witness, but I testify in court. What am I?",
-answer: "A forensic report.",
-explain: "Reports present findings clearly and defensibly."
-},
-{
-prompt: "I hide inside pictures but carry secrets. What am I?",
-answer: "Metadata (EXIF data).",
-explain: "Images often contain embedded metadata like timestamps and GPS."
-},
-{
-prompt: "I’m asked before a phone trusts a computer. Ignore me at your risk. What am I?",
-answer: "A trust prompt.",
-explain: "Device trust prompts control data access between devices."
-},
-{
-prompt: "I’m not a thief, but I steal credentials quietly. What am I?",
-answer: "A keylogger.",
-explain: "Keyloggers capture keystrokes, including passwords."
-},
-{
-prompt: "I look random, but I protect secrets. What am I?",
-answer: "Encryption.",
-explain: "Encryption transforms readable data into ciphertext."
-},
-{
-prompt: "I connect networks but can also expose them. What am I?",
-answer: "A router.",
-explain: "Routers manage traffic but must be secured."
-},
-{
-prompt: "I’m not a detective, but I correlate clues. What am I?",
-answer: "A SIEM.",
-explain: "Security Information and Event Management systems correlate logs."
-},
-{
-prompt: "I vanish after execution, leaving only traces. What am I?",
-answer: "Fileless malware.",
-explain: "Fileless malware runs in memory and leaves minimal artifacts."
-},
-{
-prompt: "I’m created every time you log in, but destroyed when you log out. What am I?",
-answer: "A session token.",
-explain: "Session tokens authenticate user sessions."
-},
-{
-prompt: "I’m not a fingerprint, but I uniquely identify a device. What am I?",
-answer: "A MAC address.",
-explain: "MAC addresses uniquely identify network interfaces."
-}
-
+          prompt: "I live in RAM and disappear when power fades. Catch me quickly or I’m gone forever. What am I?",
+          answer: "Volatile memory data.",
+          explain: "RAM data is lost when a device powers off, making live acquisition critical."
+        },
+        {
+          prompt: "I’m tiny, but I prove integrity. Change one bit and I change entirely. What am I?",
+          answer: "A hash value.",
+          explain: "Hashes verify data integrity; any change alters the hash."
+        }
       ];
 
-      // Deterministic daily index (based on local date)
       function dayKeyLocal() {
         const d = new Date();
-        // local midnight key:
         return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
       }
 
       function hashString(str) {
-        // Simple stable hash
         let h = 0;
         for (let i = 0; i < str.length; i++) {
           h = (h * 31 + str.charCodeAt(i)) >>> 0;
@@ -513,25 +332,29 @@ explain: "MAC addresses uniquely identify network interfaces."
         if (el) el.textContent = value;
       }
 
-      // Populate Quote of the Day
-      const dailyQuote = pickDaily(QUOTES, "quote");
-      setText("qotdText", "“" + dailyQuote.item.text + "”");
-      setText("qotdBy", "— " + dailyQuote.item.by);
+      // Quote of the Day
+      if (QUOTES.length) {
+        const dailyQuote = pickDaily(QUOTES, "quote");
+        setText("qotdText", "“" + dailyQuote.item.text + "”");
+        setText("qotdBy", "— " + dailyQuote.item.by);
+      }
 
-      // Populate Riddle of the Day
+      // Riddle of the Day
       let dailyRiddle = pickDaily(RIDDLES, "riddle");
+
       function renderRiddle(r) {
         setText("rotdPrompt", r.prompt);
-        setText("rotdAnswer", r.answer);
+        setText("rotdAnswerText", r.answer);
         setText("rotdExplain", r.explain || "");
-        // reset reveal state
+
         const wrap = document.getElementById("rotdAnswerWrap");
         const btn = document.getElementById("revealRiddleBtn");
         if (wrap) wrap.style.display = "none";
         if (btn) btn.setAttribute("aria-expanded", "false");
         if (btn) btn.textContent = "Reveal answer";
       }
-      renderRiddle(dailyRiddle.item);
+
+      if (RIDDLES.length) renderRiddle(dailyRiddle.item);
 
       // Reveal handler
       const revealBtn = document.getElementById("revealRiddleBtn");
@@ -545,13 +368,12 @@ explain: "MAC addresses uniquely identify network interfaces."
         });
       }
 
-      // Shuffle handler (just shows a different one; daily stays deterministic on refresh)
+      // Shuffle handler
       const shuffleBtn = document.getElementById("newRiddleBtn");
       if (shuffleBtn) {
         shuffleBtn.addEventListener("click", () => {
           if (!RIDDLES.length) return;
           let nextIdx = Math.floor(Math.random() * RIDDLES.length);
-          // Avoid repeating the currently shown daily one when possible
           if (RIDDLES.length > 1 && nextIdx === dailyRiddle.idx) {
             nextIdx = (nextIdx + 1) % RIDDLES.length;
           }
