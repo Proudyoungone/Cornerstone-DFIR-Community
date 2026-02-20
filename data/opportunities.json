@@ -56,20 +56,6 @@
     ]
   },
   {
-    "title": "Vulnerability Researcher Internship",
-    "type": "Internship",
-    "deadline": "2026-03-30",
-    "focus": "Security Research",
-    "summary": "Opportunity to work with a research team identifying software vulnerabilities, performing exploit analysis, and improving defensive tooling.",
-    "filters": ["internship"],
-    "links": [
-      {
-        "label": "Search Open Roles",
-        "url": "https://jobs.lever.co"
-      }
-    ]
-  },
-  {
     "title": "SANS DFIR NetWars Tournament",
     "type": "Competition",
     "deadline": "Rolling",
