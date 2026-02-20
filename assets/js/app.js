@@ -462,41 +462,62 @@ async function initDailyQuote(){
 }
 
 async function initDailyRiddle(){
-  const qEl = document.getElementById("riddleQuestion");
-  const aEl = document.getElementById("riddleAnswer");
-  const btn = document.getElementById("riddleReveal");
-  if(!qEl) return; // not on this page
+  const questionEl = document.getElementById("rotdPrompt");
+  const revealBtn = document.getElementById("revealRiddleBtn");
+  const shuffleBtn = document.getElementById("newRiddleBtn");
+
+  if(!questionEl) return; // not on this page
+
+  let riddles = [];
 
   try{
-    const riddles = await getJSON("./data/riddles.json");
-    if(!Array.isArray(riddles) || riddles.length === 0) throw new Error("riddles.json empty or not an array");
+    riddles = await getJSON("./data/riddles.json");
+    if(!Array.isArray(riddles) || riddles.length === 0) throw new Error("Invalid riddles.json");
 
-    const r = riddles[dayIndex() % riddles.length];
-
-    // supports ["string"] or [{question, answer}]
-    if(typeof r === "string"){
-      qEl.textContent = r;
-      if(aEl) aEl.textContent = "";
-    }else{
-      qEl.textContent = r.question || "";
-      if(aEl) aEl.textContent = r.answer || "";
-    }
-
-    // Optional: hide/show answer with a button if present
-    if(aEl){
-      aEl.hidden = true;
-      if(btn){
-        btn.addEventListener("click", () => {
-          aEl.hidden = !aEl.hidden;
-          btn.textContent = aEl.hidden ? "Reveal answer" : "Hide answer";
-        });
-      }
-    }
   }catch(e){
     console.error("Riddle load failed:", e);
-    qEl.textContent = "Riddle failed to load.";
-    if(aEl) aEl.textContent = "";
+    questionEl.textContent = "Riddle failed to load.";
+    return;
   }
+
+  function dayIndex(){
+    const now = new Date();
+    return Math.floor(Date.UTC(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    ) / 86400000);
+  }
+
+  function setRiddle(index){
+    const r = riddles[index % riddles.length];
+
+    if(typeof r === "string"){
+      questionEl.textContent = r;
+    } else {
+      questionEl.textContent = r.question || "";
+    }
+
+    revealBtn?.setAttribute("aria-expanded", "false");
+  }
+
+  // Load daily riddle
+  setRiddle(dayIndex());
+
+  // Reveal button
+  revealBtn?.addEventListener("click", () => {
+    const current = riddles[dayIndex() % riddles.length];
+    if(typeof current !== "string" && current.answer){
+      questionEl.textContent = `${current.question} — ${current.answer}`;
+      revealBtn.setAttribute("aria-expanded", "true");
+    }
+  });
+
+  // Shuffle button
+  shuffleBtn?.addEventListener("click", () => {
+    const randomIndex = Math.floor(Math.random() * riddles.length);
+    setRiddle(randomIndex);
+  });
 }
 
 
