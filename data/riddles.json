@@ -1,1 +1,102 @@
-
+[
+  {
+    "prompt": "I’m not a password, but I can unlock your account. I’m stolen quietly and replayed. What am I?",
+    "answer": "A session token.",
+    "explain": "Session hijacking allows access without knowing the password."
+  },
+  {
+    "prompt": "I live in RAM and disappear when power fades. Catch me quickly or I’m gone. What am I?",
+    "answer": "Volatile memory.",
+    "explain": "RAM data disappears when power is removed."
+  },
+  {
+    "prompt": "I prove integrity but reveal nothing about the original data. What am I?",
+    "answer": "A hash value.",
+    "explain": "Hashes verify integrity but cannot be reversed."
+  },
+  {
+    "prompt": "I look empty but remember deleted things. What am I?",
+    "answer": "Unallocated space.",
+    "explain": "Deleted data may persist until overwritten."
+  },
+  {
+    "prompt": "I record events but never speak unless examined. What am I?",
+    "answer": "A log file.",
+    "explain": "Logs record system and application events."
+  },
+  {
+    "prompt": "I’m already installed and attackers love me. What am I?",
+    "answer": "A LOLBin.",
+    "explain": "Living-off-the-land binaries are legitimate tools abused maliciously."
+  },
+  {
+    "prompt": "I tell you where a file came from, when it was touched, and sometimes by whom. What am I?",
+    "answer": "Metadata.",
+    "explain": "Metadata provides contextual information about files."
+  },
+  {
+    "prompt": "I map events in order and help reconstruct stories. What am I?",
+    "answer": "A forensic timeline.",
+    "explain": "Timelines correlate artifacts chronologically."
+  },
+  {
+    "prompt": "I’m not encryption, but I protect accounts by requiring more than one proof. What am I?",
+    "answer": "Multi-factor authentication.",
+    "explain": "MFA adds additional verification factors."
+  },
+  {
+    "prompt": "I capture every packet but never speak. What am I?",
+    "answer": "A packet capture (PCAP).",
+    "explain": "PCAP files store network traffic for analysis."
+  },
+  {
+    "prompt": "I live in Windows and remember what programs ran. Analysts love me. What am I?",
+    "answer": "Prefetch files.",
+    "explain": "Prefetch can indicate program execution history."
+  },
+  {
+    "prompt": "I connect names to numbers and attackers poison me. What am I?",
+    "answer": "DNS.",
+    "explain": "DNS poisoning redirects users to malicious destinations."
+  },
+  {
+    "prompt": "I’m the lock on a website, and without me trust breaks. What am I?",
+    "answer": "TLS/SSL certificate.",
+    "explain": "Certificates verify encrypted site identity."
+  },
+  {
+    "prompt": "I am small but I track where you've been online. What am I?",
+    "answer": "A browser cookie.",
+    "explain": "Cookies store session and tracking information."
+  },
+  {
+    "prompt": "I’m a perfect copy made to preserve evidence. What am I?",
+    "answer": "A forensic image.",
+    "explain": "Forensic images preserve original data integrity."
+  },
+  {
+    "prompt": "I’m not a calendar, but I record events chronologically. What am I?",
+    "answer": "Event logs.",
+    "explain": "Logs provide chronological system activity."
+  },
+  {
+    "prompt": "I am an open door attackers scan for. What am I?",
+    "answer": "An open port.",
+    "explain": "Open ports expose services to potential attacks."
+  },
+  {
+    "prompt": "I hide inside pictures and reveal device secrets. What am I?",
+    "answer": "EXIF metadata.",
+    "explain": "Images can contain embedded device and location data."
+  },
+  {
+    "prompt": "I’m a Windows database of settings and evidence. What am I?",
+    "answer": "The Windows Registry.",
+    "explain": "Registry entries can show persistence and usage."
+  },
+  {
+    "prompt": "I summarize who talked to who but not what was said. What am I?",
+    "answer": "NetFlow / network flow logs.",
+    "explain": "Flow logs capture metadata, not payload."
+  }
+]
