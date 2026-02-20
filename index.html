@@ -105,10 +105,7 @@
             <span class="tag green">Early-career</span>
           </div>
 
-          <p id="qotdText" style="margin:10px 0 8px; font-size:1.05rem; line-height:1.5;">
-            <!-- populated by JS -->
-          </p>
-
+          <p id="qotdText" style="margin:10px 0 8px; font-size:1.05rem; line-height:1.5;"></p>
           <div class="meta" id="qotdBy" style="margin:0;"></div>
 
           <div class="links" style="margin-top:10px;">
@@ -123,10 +120,7 @@
             <span class="tag purple">DFIR brain</span>
           </div>
 
-          <!-- ✅ YOU WERE MISSING THIS -->
-          <p class="meta" id="rotdPrompt" style="margin:10px 0 10px;">
-            <!-- populated by JS -->
-          </p>
+          <p class="meta" id="rotdPrompt" style="margin:10px 0 10px;"></p>
 
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <button class="btn ghost" id="revealRiddleBtn" type="button" aria-expanded="false" aria-controls="rotdAnswerWrap">
@@ -137,7 +131,6 @@
             </button>
           </div>
 
-          <!-- ✅ FIX: Only ONE answer element (no duplicate IDs) -->
           <div id="rotdAnswerWrap" style="margin-top:10px; display:none;">
             <div class="meta" style="margin-bottom:6px;">Answer</div>
             <p id="rotdAnswerText" style="margin:0;"></p>
@@ -252,20 +245,19 @@
 
   </main>
 
-  <script src="./assets/js/app.js"></script>
+  <!-- Keep app.js for theme/nav/year. If you have old quote/riddle fetching in app.js, delete/disable it there. -->
+  <!-- Cache-buster helps iPhone/Safari stop using an older cached file -->
+  <script src="./assets/js/app.js?v=20260220"></script>
 
   <!-- Daily Quote + Riddle logic (self-contained; GitHub Pages friendly) -->
   <script>
     (function () {
-      // --- Quote Library (expand this list as much as you want) ---
-      // Format: { text: "...", by: "Name / Source" }
       const QUOTES = [
         { text: "Start where you are. Use what you have. Do what you can.", by: "Arthur Ashe" },
         { text: "Consistency beats intensity when intensity isn’t consistent.", by: "Early-career reminder" },
         { text: "If you can explain it clearly, you understand it deeply.", by: "DFIR mindset" },
         { text: "Confidence comes from evidence—collect it.", by: "Cornerstone DFIR" },
         { text: "You don’t have to know everything. You have to know how to find out.", by: "Early-career fieldcraft" },
-
         { text: "The only way to do great work is to love what you do.", by: "Steve Jobs" },
         { text: "Success is the sum of small efforts repeated day in and day out.", by: "Robert Collier" },
         { text: "Without data, you’re just another person with an opinion.", by: "W. Edwards Deming" },
@@ -273,8 +265,6 @@
         { text: "Discipline equals freedom.", by: "Jocko Willink" }
       ];
 
-      // --- Cyber Riddle Library (expand this list as much as you want) ---
-      // Format: { prompt: "...", answer: "...", explain: "..." }
       const RIDDLES = [
         {
           prompt: "I’m not a password, but I can unlock your account. I’m stolen quietly, often reused, and I travel in pairs. What am I?",
@@ -315,9 +305,7 @@
 
       function hashString(str) {
         let h = 0;
-        for (let i = 0; i < str.length; i++) {
-          h = (h * 31 + str.charCodeAt(i)) >>> 0;
-        }
+        for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
         return h;
       }
 
@@ -332,31 +320,33 @@
         if (el) el.textContent = value;
       }
 
-      // Quote of the Day
-      if (QUOTES.length) {
+      // Quote
+      if (Array.isArray(QUOTES) && QUOTES.length) {
         const dailyQuote = pickDaily(QUOTES, "quote");
         setText("qotdText", "“" + dailyQuote.item.text + "”");
         setText("qotdBy", "— " + dailyQuote.item.by);
       }
 
-      // Riddle of the Day
-      let dailyRiddle = pickDaily(RIDDLES, "riddle");
+      // Riddle
+      const dailyRiddle = pickDaily(RIDDLES, "riddle");
 
       function renderRiddle(r) {
-        setText("rotdPrompt", r.prompt);
-        setText("rotdAnswerText", r.answer);
+        setText("rotdPrompt", r.prompt || "");
+        setText("rotdAnswerText", r.answer || "");
         setText("rotdExplain", r.explain || "");
 
         const wrap = document.getElementById("rotdAnswerWrap");
         const btn = document.getElementById("revealRiddleBtn");
         if (wrap) wrap.style.display = "none";
-        if (btn) btn.setAttribute("aria-expanded", "false");
-        if (btn) btn.textContent = "Reveal answer";
+        if (btn) {
+          btn.setAttribute("aria-expanded", "false");
+          btn.textContent = "Reveal answer";
+        }
       }
 
-      if (RIDDLES.length) renderRiddle(dailyRiddle.item);
+      if (Array.isArray(RIDDLES) && RIDDLES.length) renderRiddle(dailyRiddle.item);
 
-      // Reveal handler
+      // Reveal toggle
       const revealBtn = document.getElementById("revealRiddleBtn");
       const answerWrap = document.getElementById("rotdAnswerWrap");
       if (revealBtn && answerWrap) {
@@ -368,15 +358,13 @@
         });
       }
 
-      // Shuffle handler
+      // Shuffle (does not affect daily)
       const shuffleBtn = document.getElementById("newRiddleBtn");
       if (shuffleBtn) {
         shuffleBtn.addEventListener("click", () => {
           if (!RIDDLES.length) return;
           let nextIdx = Math.floor(Math.random() * RIDDLES.length);
-          if (RIDDLES.length > 1 && nextIdx === dailyRiddle.idx) {
-            nextIdx = (nextIdx + 1) % RIDDLES.length;
-          }
+          if (RIDDLES.length > 1 && nextIdx === dailyRiddle.idx) nextIdx = (nextIdx + 1) % RIDDLES.length;
           renderRiddle(RIDDLES[nextIdx]);
         });
       }
