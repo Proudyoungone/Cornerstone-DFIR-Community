@@ -426,6 +426,79 @@ async function initResources(){
   apply();
 }
 
+// ---------------------------
+// DAILY QUOTE + RIDDLE
+// ---------------------------
+// Stable per-day index (changes once per day regardless of refresh)
+function dayIndex(){
+  const now = new Date();
+  return Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
+}
+
+async function initDailyQuote(){
+  const textEl = document.getElementById("quoteText");
+  const authorEl = document.getElementById("quoteAuthor");
+  if(!textEl) return; // not on this page
+
+  try{
+    const quotes = await getJSON("./data/quotes.json");
+    if(!Array.isArray(quotes) || quotes.length === 0) throw new Error("quotes.json empty or not an array");
+
+    const q = quotes[dayIndex() % quotes.length];
+
+    // supports ["string"] or [{text, author}]
+    if(typeof q === "string"){
+      textEl.textContent = q;
+      if(authorEl) authorEl.textContent = "";
+    }else{
+      textEl.textContent = q.text || "";
+      if(authorEl) authorEl.textContent = q.author ? `— ${q.author}` : "";
+    }
+  }catch(e){
+    console.error("Quote load failed:", e);
+    textEl.textContent = "Quote failed to load.";
+    if(authorEl) authorEl.textContent = "";
+  }
+}
+
+async function initDailyRiddle(){
+  const qEl = document.getElementById("riddleQuestion");
+  const aEl = document.getElementById("riddleAnswer");
+  const btn = document.getElementById("riddleReveal");
+  if(!qEl) return; // not on this page
+
+  try{
+    const riddles = await getJSON("./data/riddles.json");
+    if(!Array.isArray(riddles) || riddles.length === 0) throw new Error("riddles.json empty or not an array");
+
+    const r = riddles[dayIndex() % riddles.length];
+
+    // supports ["string"] or [{question, answer}]
+    if(typeof r === "string"){
+      qEl.textContent = r;
+      if(aEl) aEl.textContent = "";
+    }else{
+      qEl.textContent = r.question || "";
+      if(aEl) aEl.textContent = r.answer || "";
+    }
+
+    // Optional: hide/show answer with a button if present
+    if(aEl){
+      aEl.hidden = true;
+      if(btn){
+        btn.addEventListener("click", () => {
+          aEl.hidden = !aEl.hidden;
+          btn.textContent = aEl.hidden ? "Reveal answer" : "Hide answer";
+        });
+      }
+    }
+  }catch(e){
+    console.error("Riddle load failed:", e);
+    qEl.textContent = "Riddle failed to load.";
+    if(aEl) aEl.textContent = "";
+  }
+}
+
 
 // ---------------------------
 // INIT
@@ -437,4 +510,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   initOpportunities();
   initConferences();
   initResources();
+
+  initDailyQuote();
+  initDailyRiddle();
 });
